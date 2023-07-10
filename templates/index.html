@@ -37,7 +37,7 @@
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link" aria-current="page" href="#">About us</a>
             </li>
             <li class="nav-item dropdown">
               <a
@@ -60,7 +60,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled">disabled</a>
+              <a class="nav-link" aria-current="page" href="#">Contact Us</a>
             </li>
           </ul>
           <form class="d-flex" role="search">
@@ -86,6 +86,60 @@
         data-bs-dismiss="alert"
         aria-label="Close"
       ></button>
+    </div>
+
+    <!-- textarea -->
+    <div class="container" style="margin-top: auto">
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label"
+          >Enter your text here.</label
+        >
+        <textarea
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="3"
+          placeholder="Enter your text"
+        ></textarea>
+      </div>
+
+      <!-- switch for Remove Punctuation -->
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="flexSwitchCheckDefault"
+        />
+        <label class="form-check-label" for="flexSwitchCheckDefault"
+          >Remove Punctuation</label
+        >
+      </div>
+
+      <!-- switch for UpperCase -->
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="flexSwitchCheckDefault"
+        />
+        <label class="form-check-label" for="flexSwitchCheckDefault"
+          >UpperCase</label
+        >
+      </div>
+
+      <!-- switch for newline -->
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="flexSwitchCheckDefault"
+        />
+        <label class="form-check-label" for="flexSwitchCheckDefault"
+          >Newline Remover</label
+        >
+      </div>
     </div>
 
     <!-- End Example Code -->
