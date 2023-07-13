@@ -1,65 +1,72 @@
 from django.http import HttpResponse
 import string
-from django.shortcuts import redirect,render#from html css files templates 
+from django.shortcuts import render#from html css files templates 
 
 def index(request):
     
     return render(request,'index.html')
  
 def analyze(request):
-    djtext = request.GET.get('text','default')
+    djtext = request.POST.get('text','default')
     
-    removepunc = request.GET.get('removepunc','off')
-    fullcapss = request.GET.get('fullcaps','off')
-    newlineremover = request.GET.get('newlineremover','off')
-    extraspaceremover = request.GET.get('extraspaceremover','off')
+    removepunc = request.POST.get('removepunc','off')
+    fullcapss = request.POST.get('fullcaps','off')
+    newlineremover = request.POST.get('newlineremover','off')
+    extraspaceremover = request.POST.get('extraspaceremover','off')
     
     punc = string.punctuation
     analyzed = ''
+    purpose = ''
     
-    if removepunc == 'on' and fullcapss == 'off':
+    if removepunc == 'on':
+        analyzed = ''
         for char in djtext:
             if char not in punc:
                 analyzed = analyzed + char
         params = {'purpose':'Removed Punctuations','analyzed_text': analyzed}   
-        return render(request,'analyze.html',params)
+        djtext = analyzed
+        purpose += " and Removed Punctuation"
+        
     
     
-    elif fullcapss == 'on' and removepunc == 'off':
+    if fullcapss == 'on':
+        analyzed = ''
         for char in djtext:
             analyzed = analyzed + char.upper()
-        params = {'purpose':'Changed to UpperCase','analyzed_text': analyzed}  
-        return render(request,'analyze.html',params)
+        params = {'purpose':'Changed to UpperCase'+purpose,'analyzed_text': analyzed}  
+        djtext = analyzed
+        purpose += " and Changed to UpperCase"
+       
     
-    
-    elif removepunc == 'on' and fullcapss == 'on':
+    if newlineremover == 'on':
+        analyzed = ''
         for char in djtext:
-            if char not in punc:
-                analyzed = analyzed + char.upper()
-        params = {'purpose':'Removed Punctuations and Changed to UpperCase','analyzed_text': analyzed}
-        return render(request,'analyze.html',params)
-    
-    elif newlineremover == 'on':
-        for char in djtext:
-            if char != '\n':
+            if char != '\n' and char != '\r':
                 analyzed = analyzed + char
-        params = {'purpose':'New Line Removed','analyzed_text': analyzed}
-        return render(request,'analyze.html',params)
+            else:
+                print('pre',analyzed)
+        params = {'purpose':'New Line Removed'+purpose,'analyzed_text': analyzed}
+        djtext = analyzed
+        purpose += " and New Line Removed"
+        
             
-    elif extraspaceremover == 'on':
+    if extraspaceremover == 'on':
+        analyzed = ''
         for index,char in enumerate(djtext):
             if not(djtext[index] == ' ' and djtext[index+1] == ' '):
                 analyzed = analyzed + char
                 
             
-        params = {'purpose':'Extra Space Removed','analyzed_text': analyzed}
+        params = {'purpose':'Extra Space Removed'+purpose,'analyzed_text': analyzed}
+        djtext = analyzed
+        purpose +=" and Extra Space Removed"
+        
+    if(removepunc != "on" and newlineremover!="on" and extraspaceremover!="on" and fullcapss!="on"):
+        analyzed = ''
+        params = {'purpose':'Analyzed fail','analyzed_text': analyzed}
         return render(request,'analyze.html',params)
-        
-    else:
-        return HttpResponse("Error")
+       
+    return render(request,'analyze.html',params)   
     
     
-        
-
-def capfirst(request):
-    return HttpResponse("capitalize first")
+    

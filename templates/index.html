@@ -80,7 +80,8 @@
 
     <!-- textarea -->
     <div class="container mt-5">
-      <form method="get" action="/analyze">
+      <form method="post" action="/analyze">
+        {% csrf_token %}
         <div class="mb-3">
           <label for="exampleFormControlTextarea1" class="form-label"
             >Enter your text here.</label
